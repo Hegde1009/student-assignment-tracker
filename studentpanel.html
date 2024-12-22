@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Submit Assignment</title>
+	<link rel="stylesheet" href="styles.css">
+
+
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Submit Assignment</title>
+	<link rel="stylesheet" href="styles.css">
+	<style>
+		/* General Reset */
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: 'Poppins', sans-serif;
+			background: linear-gradient(135deg, #1a1a1a, #000);
+			color: #fff;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+
+		/* Container Styles */
+		.container {
+			max-width: 600px;
+			width: 90%;
+			background: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(10px);
+			border-radius: 15px;
+			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+			padding: 30px;
+			color: #fff;
+			text-align: center;
+		}
+
+		/* Header Styles */
+		header h1 {
+			font-size: 2rem;
+			color: #f5f5f5;
+			margin-bottom: 5px;
+			text-shadow: 0 0 10px #007bff, 0 0 20px #007bff;
+		}
+
+		header p {
+			font-size: 0.9rem;
+			color: #aaa;
+			margin-bottom: 20px;
+		}
+
+		/* Form Styles */
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+
+		.form-group {
+			display: flex;
+			flex-direction: column;
+			text-align: left;
+		}
+
+		label {
+			font-size: 0.9rem;
+			margin-bottom: 5px;
+			color: #ddd;
+		}
+
+		input,
+		select {
+			padding: 10px;
+			font-size: 1rem;
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			border-radius: 8px;
+			background: rgba(255, 255, 255, 0.1);
+			color: #fff;
+			transition: all 0.3s ease;
+		}
+
+		input:focus,
+		select:focus {
+			border-color: #007bff;
+			outline: none;
+			box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+		}
+
+		input:hover,
+		select:hover {
+			background: rgba(255, 255, 255, 0.2);
+		}
+
+		/* Submit Button */
+		button.submit-button {
+			padding: 12px 20px;
+			font-size: 1rem;
+			color: #fff;
+			background: linear-gradient(135deg, #007bff, #00d4ff);
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			text-transform: uppercase;
+			font-weight: bold;
+			box-shadow: 0 4px 15px rgba(0, 123, 255, 0.6);
+		}
+
+		button.submit-button:hover {
+			background: linear-gradient(135deg, #00d4ff, #007bff);
+			box-shadow: 0 6px 20px rgba(0, 123, 255, 0.8);
+			transform: translateY(-3px);
+		}
+
+		/* Input File Styling */
+		input[type="file"] {
+			padding: 10px;
+			font-size: 0.9rem;
+			background: rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			border-radius: 8px;
+			color: #ddd;
+			cursor: pointer;
+		}
+
+		input[type="file"]::-webkit-file-upload-button {
+			padding: 8px 15px;
+			color: #fff;
+			background: linear-gradient(135deg, #ff0080, #ff0080);
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		input[type="file"]::-webkit-file-upload-button:hover {
+			background: linear-gradient(135deg, #ff3d8b, #ff0080);
+			box-shadow: 0 4px 10px rgba(255, 0, 128, 0.6);
+			transform: translateY(-3px);
+		}
+
+		/* Glassmorphism Shadow Effect */
+		.form-group input,
+		.form-group select {
+			box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.4);
+		}
+
+		input[type="date"]::-webkit-calendar-picker-indicator {
+			filter: invert(1);
+		}
+
+		/* Responsive Design */
+		@media screen and (max-width: 768px) {
+			header h1 {
+				font-size: 1.5rem;
+			}
+
+			button.submit-button {
+				font-size: 0.9rem;
+				background-color: #0056b3;
+			}
+		}
+
+		/* Existing CSS code from your question */
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<header>
+			<h1>Submit Assignment</h1>
+			<p>Logged in as ATS-APP</p>
+		</header>
+		<form id="studentAssignmentForm">
+			<div class="form-group">
+				<label for="username">Username</label>
+				<input type="text" id="username" placeholder="Enter username" required>
+			</div>
+			<div class="form-group">
+				<label for="assignment">Assignment</label>
+				<select id="assignment" required>
+					<option value="">Choose Assignment</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="file">File</label>
+				<input type="file" id="file" required>
+			</div>
+			<button type="submit" class="submit-button">Submit</button>
+		</form>
+	</div>
+
+	<script>
+		// Student Panel Script to Integrate with Dashboard's AssignmentTracker
+
+		class StudentPanel {
+			constructor() {
+				this.assignments = [];
+				this.init();
+			}
+
+			// Initialize the student panel
+			init() {
+				this.loadAssignmentsFromDashboard();
+				document.getElementById('studentAssignmentForm').addEventListener('submit', (e) => this.submitAssignment(e));
+			}
+
+			// Load assignments from dashboard's localStorage
+			loadAssignmentsFromDashboard() {
+				const storedAssignments = JSON.parse(localStorage.getItem('assignments')) || [];
+				this.assignments = storedAssignments;
+				this.populateAssignmentsDropdown();
+			}
+
+			// Populate assignments dropdown
+			populateAssignmentsDropdown() {
+				const assignmentDropdown = document.getElementById('assignment');
+				assignmentDropdown.innerHTML = `<option value="">Choose Assignment</option>`; // Reset options
+
+				this.assignments.forEach((assignment, index) => {
+					const option = document.createElement('option');
+					option.value = index; // Use the index as the value
+					option.textContent = `${assignment.subject} - ${assignment.title} (Deadline: ${assignment.deadline})`;
+					assignmentDropdown.appendChild(option);
+				});
+			}
+
+			// Handle assignment submission
+			submitAssignment(e) {
+				e.preventDefault(); // Prevent page reload
+
+				const username = document.getElementById('username').value;
+				const assignmentIndex = document.getElementById('assignment').value;
+				const fileInput = document.getElementById('file');
+
+				if (assignmentIndex === "") {
+					alert("Please select an assignment.");
+					return;
+				}
+
+				if (fileInput.files.length === 0) {
+					alert("Please upload a file.");
+					return;
+				}
+
+				const selectedAssignment = this.assignments[assignmentIndex];
+				const uploadedFile = fileInput.files[0];
+
+				// Log the submitted data (or send it to an API)
+				const submission = {
+					username,
+					assignment: selectedAssignment,
+					fileName: uploadedFile.name,
+					timestamp: new Date().toISOString(),
+				};
+
+				console.log("Assignment Submission:", submission);
+
+				// Clear the form
+				document.getElementById('studentAssignmentForm').reset();
+				alert("Assignment submitted successfully!");
+			}
+		}
+
+		// Initialize the student panel
+		new StudentPanel();
+	</script>
+</body>
+
+</html>
