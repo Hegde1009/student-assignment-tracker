@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTU Attendance Calculator</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #attendance-calculator {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #ff6347;
+            text-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
+        }
+        label, select, input {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+        select, input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: #fff;
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #ff6347;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
+        }
+        button:hover {
+            background: #ff4500;
+            box-shadow: 0 0 20px #ff4500, 0 0 30px #ff4500;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+    </style>
+    <script>
+        function calculateClassesToMiss(classesPerWeek, internalDays, totalWeeks, attendancePercent) {
+            const totalClasses = (totalWeeks * classesPerWeek) - internalDays;
+            const requiredClasses = Math.ceil(totalClasses * (attendancePercent / 100));
+            const maxClassesToMiss = totalClasses - requiredClasses;
+            return maxClassesToMiss;
+        }
+
+        function openNewWindow(event) {
+            event.preventDefault();
+            const scheme = document.getElementById("scheme").value;
+            const startDate = new Date(document.getElementById("startDate").value);
+            const endDate = new Date(document.getElementById("endDate").value);
+            const classesPerWeek = parseInt(document.getElementById("classesPerWeek").value, 10);
+            const internalDays = parseInt(document.getElementById("internalDays").value, 10);
+
+            // Calculate the number of weeks in the semester
+            const totalWeeks = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24 * 7));
+
+            // Calculate the maximum number of classes to miss to maintain 85% attendance
+            const maxClassesToMiss = calculateClassesToMiss(classesPerWeek, internalDays, totalWeeks, 85);
+
+            const resultPage = `
+            <html lang='en'>
+            <head>
+                <meta charset='UTF-8'>
+                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                <title>Calculation Result</title>
+                <style>
+                    body {
+                        background-color: #000;
+                        color: #fff;
+                        font-family: Arial, sans-serif;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        margin: 0;
+                    }
+                    #result-container {
+                        background: #1a1a1a;
+                        padding: 20px;
+                        border-radius: 10px;
+                        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+                        text-align: center;
+                    }
+                    h1 {
+                        color: #ff6347;
+                        text-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
+                    }
+                    p {
+                        margin: 10px 0;
+                    }
+                </style>
+            </head>
+            <body>
+                <div id='result-container'>
+                    <h1>VTU Attendance Calculation Result</h1>
+                    <div id='result'>
+                        <p><strong>Scheme:</strong> ${scheme}</p>
+                        <p><strong>Semester Start Date:</strong> ${startDate.toISOString().split('T')[0]}</p>
+                        <p><strong>Semester End Date:</strong> ${endDate.toISOString().split('T')[0]}</p>
+                        <p><strong>Number of Classes Per Week:</strong> ${classesPerWeek}</p>
+                        <p><strong>Number of Internal Exam Days:</strong> ${internalDays}</p>
+                        <p><strong>Result:</strong> You can miss up to ${maxClassesToMiss} classes to maintain 85% attendance.</p>
+                    </div>
+                </div>
+            </body>
+            </html>`;
+            
+            const newWindow = window.open();
+            newWindow.document.write(resultPage);
+        }
+    </script>
+</head>
+<body>
+    <section id="attendance-calculator">
+        <h1>VTU Attendance Calculator</h1>
+        <form id="attendanceForm" onsubmit="openNewWindow(event)">
+            <label for="scheme">Scheme:</label>
+            <select id="scheme" required>
+                <option value="">Select Scheme</option>
+                <option value="2018">2018</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2024">2024</option>
+            </select>
+
+            <label for="startDate">Semester Start Date:</label>
+            <input type="date" id="startDate" required>
+
+            <label for="endDate">Semester End Date:</label>
+            <input type="date" id="endDate" required>
+
+            <label for="classesPerWeek">Number of Classes Per Week:</label>
+            <input type="number" id="classesPerWeek" min="1" required>
+
+            <label for="internalDays">Number of Internal Exam Days:</label>
+            <input type="number" id="internalDays" min="0" required>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div id="result"></div>
+    </section>
+</body>
+</html>
