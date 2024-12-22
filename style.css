@@ -1,0 +1,269 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: url('1.jpg') no-repeat center center fixed; /* Replace with your drifting car GIF */
+    background-size: cover;
+    transition: background-color 0.5s ease;
+}
+
+/* Navigation Bar */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: rgba(74, 144, 226, 0.8);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav .logo:hover {
+    color: #ffcc00;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ffcc00;
+}
+
+/* Underline animation */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #ffcc00;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Current Date */
+.date {
+    font-weight: bold;
+}
+
+/* Branding and Welcome Section */
+header {
+    padding: 20px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.branding h1 {
+    font-size: 2.5rem;
+    color: #4a90e2;
+}
+
+.branding p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.welcome-section, .ad-section {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ad-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ad-section li {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+/* Center Role Selection Section */
+#role-selection {
+    flex: 1; /* Allows this section to take up available vertical space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+}
+
+#role-selection .login-container {
+    display: inline-block;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Authentication Section */
+.auth-container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.toggle-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.toggle-container button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    background: #4a90e2;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.toggle-container button:hover {
+    background: #005bb5;
+    transform: scale(1.05);
+}
+
+.form {
+    display: none;
+}
+
+.form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form button {
+    width: auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: #4a90e2;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.form button:hover {
+    background: #005bb5;
+    transform: scale(1.05);
+}
+
+/* Main Dashboard Content */
+#main-content {
+    display: none;
+    padding: 20px;
+}
+
+#dashboard {
+    max-width: 800px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#dashboard header {
+    text-align: center;
+}
+
+#dashboard h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #4a90e2;
+}
+
+#dashboard hr {
+    margin: 20px 0;
+}
+
+#dashboard h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #4a90e2;
+}
+
+.announcement-card, .feature-card, .notification-card, .progress-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    color: #fff;
+    margin-top: auto; /* Push the footer to the bottom */
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+}
+
+footer p {
+    margin: 0;
+}
