@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Sidebar and Dashboard General Styles */
+        body {
+            display: flex;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: #1c1c1c; /* Dark background */
+            color: #f1c40f; /* Yellow text */
+        }
+    
+        .dashboard {
+            display: flex;
+            width: 100%;
+        }
+    
+        .sidebar {
+            background: #000000; /* Black background */
+            color: #f1c40f; /* Yellow text */
+            padding: 20px;
+            width: 250px;
+            height: 100vh;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Comic font */
+        }
+    
+        .sidebar .menu {
+            list-style: none;
+            padding: 0;
+        }
+    
+        .sidebar .menu li {
+            margin: 15px 0;
+        }
+    
+        .sidebar .menu a {
+            text-decoration: none;
+            color: #f1c40f; /* Yellow text */
+            font-size: 1rem;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+    
+        .sidebar .menu a:hover {
+            background: #333333; /* Dark gray background */
+        }
+    
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+    
+        /* Profile Page Styles */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    
+        .profile-header h1 {
+            font-size: 2rem;
+            color: #f1c40f; /* Yellow text */
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Comic font */
+        }
+    
+        .profile-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #000000; /* Black background */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        .profile-form .form-group {
+            margin-bottom: 20px;
+        }
+    
+        .profile-form label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #f1c40f; /* Yellow text */
+        }
+    
+        .profile-form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: #333333; /* Dark gray background */
+            color: #f1c40f; /* Yellow text */
+        }
+    
+        .profile-form button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #f1c40f; /* Yellow background */
+            color: #000000; /* Black text */
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    
+        .profile-form button:hover {
+            background: #e1b700; /* Darker yellow background */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>EduTrack</h2>
+            <ul class="menu">
+                <li><a href="./dashboard.html">Dashboard</a></li>
+                <li><a href="#">View Assignments</a></li>
+                <li><a href="./studentpanel.html">Upload Assignment</a></li>
+                <li><a href="./profile.html">Profile</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="profile-header">
+                <h1>Student Profile</h1>
+                <p>Manage and update your details.</p>
+            </div>
+            <form class="profile-form" id="profileForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="enrollment">Enrollment Number</label>
+                    <input type="text" id="enrollment" placeholder="Enter your enrollment number" required>
+                </div>
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <input type="text" id="department" placeholder="Enter your department" required>
+                </div>
+                <button type="submit">Save Profile</button>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        // Student Profile Script
+        class StudentProfile {
+            constructor() {
+                this.init();
+            }
+
+            // Initialize the profile page
+            init() {
+                this.loadProfile();
+                document.getElementById('profileForm').addEventListener('submit', (e) => this.saveProfile(e));
+            }
+
+            // Load profile from localStorage
+            loadProfile() {
+                const profileData = JSON.parse(localStorage.getItem('studentProfile')) || {};
+                document.getElementById('name').value = profileData.name || '';
+                document.getElementById('email').value = profileData.email || '';
+                document.getElementById('enrollment').value = profileData.enrollment || '';
+                document.getElementById('department').value = profileData.department || '';
+            }
+
+            // Save profile to localStorage
+            saveProfile(e) {
+                e.preventDefault(); // Prevent page reload
+
+                const profileData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    enrollment: document.getElementById('enrollment').value,
+                    department: document.getElementById('department').value,
+                };
+
+                localStorage.setItem('studentProfile', JSON.stringify(profileData));
+                alert('Profile updated successfully!');
+            }
+        }
+
+        // Initialize the student profile
+        new StudentProfile();
+    </script>
+</body>
+
+</html>
