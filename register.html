@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Forms</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .registration-section {
+            display: none;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            width: 300px;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #ff6347;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
+        }
+
+        button:hover {
+            background: #ff4500;
+            box-shadow: 0 0 20px #ff4500, 0 0 30px #ff4500;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ff6347;
+            text-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
+        }
+
+        label,
+        input,
+        select {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="button-container">
+        <button onclick="showForm('student')">Register as Student</button>
+        <button onclick="showForm('educator')">Register as Educator</button>
+    </div>
+
+    <section id="registration" class="registration-section">
+        <h2>Student Registration</h2>
+        <form id="studentForm" action="#" method="post" onsubmit="openStudentForm(event)">
+            <label for="studentName">Full Name:</label>
+            <input type="text" id="studentName" name="studentName" required>
+
+            <label for="studentEmail">Email:</label>
+            <input type="email" id="studentEmail" name="studentEmail" required>
+
+            <label for="studentPassword">Password:</label>
+            <input type="password" id="studentPassword" name="studentPassword" required>
+
+            <label for="studentID">Student ID:</label>
+            <input type="text" id="studentID" name="studentID" required>
+
+            <label for="yearAndSemester">Year & Semester:</label>
+            <select id="yearAndSemester" name="yearAndSemester" required>
+                <option value="">Select Year & Semester</option>
+                <option value="1st Year - Semester 1">1st Year - Semester 1</option>
+                <option value="1st Year - Semester 2">1st Year - Semester 2</option>
+                <option value="2nd Year - Semester 3">2nd Year - Semester 3</option>
+                <option value="2nd Year - Semester 4">2nd Year - Semester 4</option>
+                <option value="3rd Year - Semester 5">3rd Year - Semester 5</option>
+                <option value="3rd Year - Semester 6">3rd Year - Semester 6</option>
+                <option value="4th Year - Semester 7">4th Year - Semester 7</option>
+                <option value="4th Year - Semester 8">4th Year - Semester 8</option>
+            </select>
+
+            <label for="major">Major/Subject Focus (optional):</label>
+            <input type="text" id="major" name="major">
+
+            <button type="submit">Register as Student</button>
+        </form>
+    </section>
+
+    <section id="educator-registration" class="registration-section">
+        <h2>Educator Registration</h2>
+        <form id="educatorForm" action="#" method="post" onsubmit="openEducatorForm(event)">
+            <label for="educatorName">Full Name:</label>
+            <input type="text" id="educatorName" name="educatorName" required>
+
+            <label for="educatorEmail">Email:</label>
+            <input type="email" id="educatorEmail" name="educatorEmail" required>
+
+            <label for="educatorPassword">Password:</label>
+            <input type="password" id="educatorPassword" name="educatorPassword" required>
+
+            <label for="educatorID">Educator ID (if applicable):</label>
+            <input type="text" id="educatorID" name="educatorID">
+
+            <label for="institution">Institution:</label>
+            <input type="text" id="institution" name="institution" required>
+
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department" required>
+
+            <label for="subject">Subjects Taught:</label>
+            <input type="text" id="subject" name="subject" required>
+
+            <button type="submit">Register as Educator</button>
+        </form>
+    </section>
+
+    <script>
+        function showForm(type) {
+            document.getElementById("registration").style.display = type === "student" ? "block" : "none";
+            document.getElementById("educator-registration").style.display = type === "educator" ? "block" : "none";
+        }
+
+        function openStudentForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const studentData = Object.fromEntries(formData.entries());
+            alert(`Student Registered: ${JSON.stringify(studentData)}`);
+        }
+
+        function openEducatorForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const educatorData = Object.fromEntries(formData.entries());
+            alert(`Educator Registered: ${JSON.stringify(educatorData)}`);
+        }
+    </script>
+</body>
+
+</html>
