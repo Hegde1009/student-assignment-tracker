@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Board</title>
+    <link rel="stylesheet" href="progress-board.css">
+</head>
+
+<body>
+    <!-- Progress Board Section -->
+    <section id="progress-board" class="batman-theme">
+        <h2>Progress Board</h2>
+        <div class="container">
+            <h3>Assignment Analysis</h3>
+            <div class="stats">
+                <div class="stat">
+                    <h4>Completed Assignments</h4>
+                    <p id="completed-assignments">0</p>
+                </div>
+                <div class="stat">
+                    <h4>Pending Assignments</h4>
+                    <p id="pending-assignments">0</p>
+                </div>
+                <div class="stat">
+                    <h4>Overdue Assignments</h4>
+                    <p id="overdue-assignments">0</p>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <h4>Overall Progress</h4>
+                <div class="progress-container">
+                    <div id="overall-progress" class="progress">0%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="progress-board.js"></script>
+</body>
+
+</html>
