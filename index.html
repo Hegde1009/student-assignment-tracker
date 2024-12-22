@@ -5,576 +5,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduTrack - Student Assignment Tracker</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Arial', sans-serif;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f7f9;
-            background-image: url('1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            transition: background-color 0.5s ease;
-        }
-
-        /* Navigation Bar */
-        nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            background-color: #4a90e2;
-            color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        nav .logo {
-            font-size: 1.5em;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        nav .logo:hover {
-            color: #ffcc00;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            font-weight: 500;
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #ffcc00;
-        }
-
-        /* Underline animation */
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: #ffcc00;
-            bottom: 0;
-            left: 0;
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            transform: scaleX(1);
-        }
-
-        /* Current Date */
-        .date {
-            font-weight: bold;
-        }
-
-        /* Login Container */
-        .login-container {
-            background-color: #222;
-            /* Dark background for login */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.3s;
-        }
-
-        .login-container:hover {
-            transform: scale(1.05);
-        }
-
-        h1 {
-            margin-bottom: 20px;
-            color: #d4af37;
-            /* Golden color */
-            font-family: 'Georgia', serif;
-            /* Eye-catching font */
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        input[type="email"],
-        input[type="password"],
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #d4af37;
-            /* Golden border */
-            border-radius: 5px;
-            transition: border-color 0.3s;
-            background-color: #333;
-            /* Dark background */
-            color: #d4af37;
-            /* Golden text color */
-        }
-
-        input:focus {
-            border-color: #ffcc00;
-            /* Golden border on focus */
-            outline: none;
-        }
-
-        button {
-            background-color: #4285f4;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            width: 100%;
-        }
-
-        /* Ad Section Styling */
-        .ad-section {
-            border: 2px solid #0073e6;
-            /* Border color to make it stand out */
-            padding: 20px;
-            border-radius: 10px;
-            background-color: rgba(240, 248, 255, 0.8);
-            /* Light background with slight transparency */
-            margin: 20px auto;
-            width: 80%;
-            /* Adjust width as needed */
-            max-width: 600px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            /* Soft shadow for a subtle lift effect */
-            text-align: center;
-        }
-
-        /* Header Styling for Ad Section */
-        .ad-section h1 {
-            color: #0073e6;
-            font-size: 1.8em;
-            margin-bottom: 15px;
-        }
-
-        /* Sub-header Styling */
-        .ad-section h2 {
-            color: #ff6600;
-            font-size: 1.4em;
-            margin-top: 15px;
-        }
-
-        /* Paragraph Text Styling */
-        .ad-section p {
-            color: #333;
-            font-size: 1em;
-            line-height: 1.5;
-        }
-
-        /* Icon Styling */
-        .ad-section h2:before {
-            content: "• ";
-            color: #ff6600;
-            font-weight: bold;
-        }
-
-
-        button:hover {
-            background-color: #357ae8;
-            transform: scale(1.05);
-        }
-
-        .error-message {
-            color: red;
-            margin-top: 10px;
-        }
-
-        /* Dashboard Styles */
-        #dashboard {
-            padding: 20px;
-            display: none;
-            /* Initially hidden */
-            color: #ffcc00;
-            /* Change dashboard text color */
-        }
-
-        /* General Form Styling */
-        .registration-section {
-            width: 60%;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .registration-section h2 {
-            color: #0073e6;
-            font-size: 1.8em;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .registration-section form div {
-            margin-bottom: 15px;
-        }
-
-        .registration-section label {
-            display: block;
-            font-size: 1em;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .registration-section input[type="text"],
-        .registration-section input[type="email"],
-        .registration-section input[type="password"],
-        .registration-section input[type="tel"],
-        .registration-section select,
-        .registration-section textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1em;
-        }
-
-        .registration-section button {
-            width: 100%;
-            padding: 10px;
-            font-size: 1.2em;
-            color: #fff;
-            background-color: #0073e6;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .registration-section button:hover {
-            background-color: #005bb5;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /* Correct alignment */
-            position: relative;
-            /* For positioning the logout button */
-        }
-
-        .logout-button {
-            position: absolute;
-            /* Position it in the top-right corner */
-            top: 9px;
-            /* Adjust vertical positioning */
-            right: 1000px;
-            /* Adjust horizontal positioning */
-            left: 1px;
-            padding: 1px;
-            /* Smaller padding */
-            font-size: 16px;
-            /* Smaller font size */
-            background-color: #f1c40f;
-            /* Adjust color as needed */
-            color: #000;
-            /* Adjust text color */
-            border: none;
-            /* Remove default border */
-            border-radius: 30px;
-            /* Rounded corners if desired *
-            cursor: pointer; /* Show pointer on hover */
-        }
-
-        .logout-button:hover {
-            background-color: #e67e22;
-            /* Change color on hover if desired */
-        }
-
-
-        .logout-button:hover {
-            color: #ffcc00;
-            /* Lighter golden color on hover */
-            transform: scale(1.1);
-            /* Grow on hover */
-        }
-
-        .announcement-card,
-        .feature-card,
-        .notification-card,
-        .progress-card {
-            background-color: #222;
-            /* Match login box color */
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border: 2px solid #d4af37;
-            /* Golden border */
-            color: #d4af37;
-            /* Golden text color for visibility */
-        }
-
-        h3 {
-            color: #ffcc00;
-            /* Make headings visible */
-            font-family: 'Georgia', serif;
-            /* Eye-catching font */
-        }
-
-        /* Attendance Calculator Styles */
-        #attendance-calculator {
-            padding: 20px;
-            background-color: #222;
-            /* Match login box color */
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            display: none;
-            /* Initially hidden */
-        }
-
-        /* Attendance Calculator Form */
-        form {
-            max-width: 600px;
-            margin: auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-            color: #333;
-        }
-
-        #result {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #e7f3fe;
-            border: 1px solid #b3d4fc;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">EduTrack</div>
-        <ul class="nav-links">
-            <li><a href="#announcements">Announcements</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#notifications">Notifications</a></li>
-            <li><a href="#progress">Progress</a></li>
-            <li><a href="#attendance-calculator" onclick="showAttendanceCalculator()">VTU Attendance Calculator</a></li>
-            <li><a href="#registration">Register</a></li>
-        </ul>
-        <div class="date" id="current-date"></div>
-    </nav>
-    <!-- Welcome Section -->
-    <section style="padding: 40px; text-align: center; background-color: #f4f4f9;">
-        <h1>Welcome to Student Assignment Tracker</h1>
-        <p style="max-width: 800px; margin: auto;">
-            The Student Assignment Tracker is designed to help students manage assignments, track deadlines, and receive
-            feedback—all in one place. Our goal is to make learning more organized and stress-free.
-        </p>
-    </section>
-    <!-- User Role Selection -->
-    <section id="role-selection" style="display: flex; justify-content: center; margin-top: 50px;">
+    <!-- Branding and Welcome Section -->
+    <header id="branding-section">
+        <div class="branding">
+            <h1>EduTrack</h1>
+            <p>Your one-stop solution for tracking assignments and progress.</p>
+        </div>
+
+        <section class="welcome-section">
+            <h2>Welcome to Student Assignment Tracker</h2>
+            <p>Manage assignments, track deadlines, and receive feedback seamlessly!</p>
+        </section>
+
+        <section class="ad-section">
+            <h3>Why Choose EduTrack?</h3>
+            <ul>
+                <li>📅 Centralized Assignment Management</li>
+                <li>⏰ Better Time Management</li>
+                <li>🔔 Real-Time Notifications</li>
+            </ul>
+        </section>
+    </header>
+
+    <!-- Role Selection Section -->
+    <section id="role-selection">
         <div class="login-container">
             <h1>Select Your Role</h1>
-            <button onclick="setRole('student')">Student</button>
-            <button onclick="setRole('educator')">Educator</button>
+            <button onclick="showSignIn('student')">I am a Student</button>
+            <button onclick="showSignIn('educator')">I am an Educator</button>
         </div>
     </section>
 
-    <!-- Login Page -->
-    <section id="login-page" style="display: none; flex-direction: column;">
-        <div class="login-container">
-            <h1>Sign in</h1>
-            <div class="input-group">
-                <input type="email" id="email" placeholder="Email or phone" required>
+    <!-- Authentication Section -->
+    <section id="authentication" style="display: none;">
+        <div class="auth-container">
+            <div class="toggle-container">
+                <button id="signInBtn" onclick="toggleForm('signIn')">Sign In</button>
+                <button id="signUpBtn" onclick="toggleForm('signUp')">Sign Up</button>
             </div>
-            <div class="input-group">
-                <input type="password" id="password" placeholder="Password" required>
+            <div id="signInForm" class="form">
+                <h2>Sign In</h2>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button onclick="handleLogin()">Sign In</button>
             </div>
-            <button id="login-button">Login</button>
-            <p id="error-message" class="error-message"></p>
-        </div>
-    </section>
-    <section class="ad-section"
-        style="border: 2px solid #0073e6; padding: 20px; border-radius: 10px; background-color: #f0f8ff; margin: 20px;">
-        <h1 style="color: #0073e6; text-align: center;">Why Use Student Assignment Tracker?</h1>
-
-        <div style="margin-top: 15px;">
-            <h2 style="color: #ff6600;">📅 Centralized Assignment Management</h2>
-            <p>Access all assignments in one place, with clear due dates and instructions. No more missed deadlines!</p>
-        </div>
-
-        <div style="margin-top: 15px;">
-            <h2 style="color: #ff6600;">⏰ Better Time Management</h2>
-            <p>Plan ahead with a full view of upcoming assignments. Prioritize tasks with ease.</p>
-        </div>
-
-        <div style="margin-top: 15px;">
-            <h2 style="color: #ff6600;">🔔 Real-Time Notifications</h2>
-            <p>Stay updated with instant alerts on assignment changes. Always be in the know.</p>
+            <div id="signUpForm" class="form" style="display: none;">
+                <h2>Sign Up</h2>
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button onclick="handleSignUp()">Sign Up</button>
+            </div>
         </div>
     </section>
 
-    <section>
-        <marquee behavior="round" direction="left to right"><big> <span style="color:blue">the website is getting
-                    ready</span> </big> </marquee>
-    </section>
-    <!-- Dashboard Section -->
-    <section id="dashboard">
-        <header>
-            <h2>Dashboard</h2>
-            <div style="flex-grow: 1; text-align: right;">
-                <button class="logout-button" onclick="logout()">Logout </button>
+    <!-- Main Dashboard Content -->
+    <div id="main-content" style="display: none;">
+        <!-- Navigation Bar -->
+        <nav>
+            <div class="logo">EduTrack</div>
+            <ul class="nav-links">
+                <li><a href="./dashboard.html">Dashboard</a></li>
+                <li><a href="#announcements">Announcements</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#notifications">Notifications</a></li>
+                <li><a href="./progress.html">Progress</a></li>
+                <li><a href="./attendancecalculator.html">VTU Attendance Calculator</a></li>
+                <li><a href="./studentpanel.html">Assignments</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+            <div id="current-date"></div>
+        </nav>
 
+        <!-- Dashboard Sections -->
+        <section id="dashboard">
+            <header>
+                <h2>Dashboard</h2>
+                <hr>
+            </header>
+            <div id="announcements">
+                <h3>Announcements</h3>
+                <div class="announcement-card">No new announcements.</div>
             </div>
-            <hr>
-        </header>
-        <div id="announcements">
-            <h3>Announcements</h3>
-            <div class="announcement-card">Assignment 1 is due next week.</div>
-            <div class="announcement-card">New resources have been added to the library.</div>
-        </div>
-        <div id="features">
-            <h3>Features</h3>
-            <div class="feature-card">Track your assignments, view grades, and communicate with educators.</div>
-        </div>
-        <div id="notifications">
-            <h3>Notifications</h3>
-            <div class="notification-card">You have 2 new messages from your educator.</div>
-        </div>
-        <div id="progress">
-            <h3>Your Progress</h3>
-            <div class="progress-card">This feature is coming soon.</div>
-        </div>
-    </section>
-    <!-- Registration Section -->
-    <section id="registration" class="registration-section" style="display: none;">
-        <h2>Student Registration</h2>
-        <form id="studentForm" action="#" method="post">
-            <div>
-                <label for="studentName">Full Name:</label>
-                <input type="text" id="studentName" name="studentName" required>
+            <div id="features">
+                <h3>Features</h3>
+                <p>Track your assignments, view grades, and communicate with educators.</p>
             </div>
-            <div>
-                <label for="studentEmail">Email:</label>
-                <input type="email" id="studentEmail" name="studentEmail" required>
+            <div id="notifications">
+                <h3>Notifications</h3>
+                <p>You have no new notifications.</p>
             </div>
-            <div>
-                <label for="studentPassword">Password:</label>
-                <input type="password" id="studentPassword" name="studentPassword" required>
-            </div>
-            <div>
-                <label for="studentID">Student ID:</label>
-                <input type="text" id="studentID" name="studentID" required>
-            </div>
-            <div>
-                <label for="yearAndSemester">Year & Semester:</label>
-                <select id="yearAndSemester" name="yearAndSemester" required>
-                    <option value="">Select Year & Semester</option>
-                    <option value="1st Year - Semester 1">1st Year - Semester 1</option>
-                    <option value="1st Year - Semester 2">1st Year - Semester 2</option>
-                    <option value="2nd Year - Semester 3">2nd Year - Semester 3</option>
-                    <option value="2nd Year - Semester 4">2nd Year - Semester 4</option>
-                    <option value="3rd Year - Semester 5">3rd Year - Semester 5</option>
-                    <option value="3rd Year - Semester 6">3rd Year - Semester 6</option>
-                    <option value="4th Year - Semester 7">4th Year - Semester 7</option>
-                    <option value="4th Year - Semester 8">4th Year - Semester 8</option>
-                </select>
-            </div>
-            <div>
-                <label for="major">Major/Subject Focus (optional):</label>
-                <input type="text" id="major" name="major">
-            </div>
-            <button type="submit">Register as Student</button>
-        </form>
+        </section>
+    </div>
 
-        <h2>Educator Registration</h2>
-        <form id="educatorForm" action="#" method="post">
-            <div>
-                <label for="educatorName">Full Name:</label>
-                <input type="text" id="educatorName" name="educatorName" required>
-            </div>
-            <div>
-                <label for="educatorEmail">Email:</label>
-                <input type="email" id="educatorEmail" name="educatorEmail" required>
-            </div>
-            <div>
-                <label for="educatorPassword">Password:</label>
-                <input type="password" id="educatorPassword" name="educatorPassword" required>
-            </div>
-            <div>
-                <label for="educatorID">Educator ID (if applicable):</label>
-                <input type="text" id="educatorID" name="educatorID">
-            </div>
-            <div>
-                <label for="institution">Institution:</label>
-                <input type="text" id="institution" name="institution" required>
-            </div>
-            <div>
-                <label for="department">Department:</label>
-                <input type="text" id="department" name="department" required>
-            </div>
-            <div>
-                <label for="subject">Subjects Taught:</label>
-                <input type="text" id="subject" name="subject" required>
-            </div>
-            <button type="submit">Register as Educator</button>
-        </form>
-    </section>
-    <!-- Attendance Calculator Section -->
-    <section id="attendance-calculator">
-        <h1>VTU Attendance Calculator</h1>
-        <form id="attendanceForm">
-            <label for="scheme">Scheme:</label>
-            <select id="scheme" required>
-                <option value="">Select Scheme</option>
-                <option value="2018">2018</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2024">2024</option>
-            </select>
-
-            <label for="startDate">Semester Start Date:</label>
-            <input type="date" id="startDate" required>
-
-            <label for="endDate">Semester End Date:</label>
-            <input type="date" id="endDate" required>
-
-            <label for="classesPerWeek">Number of Classes Per Week:</label>
-            <input type="number" id="classesPerWeek" min="1" required>
-
-            <label for="internalDays">Number of Internal Exam Days:</label>
-            <input type="number" id="internalDays" min="0" required>
-
-            <button type="submit">Calculate</button>
-        </form>
-
-        <div id="result"></div>
-    </section>
+    <!-- Footer -->
     <footer style="background-color: #333; color: #fff; padding: 20px; text-align: center;">
         <div style="max-width: 1000px; margin: auto;">
             <!-- Footer Links -->
@@ -591,9 +119,9 @@
                 <div>
                     <h3>Quick Links</h3>
                     <ul style="list-style-type: none; padding: 0;">
-                        <li><a href="#dashboard" style="color: #fff; text-decoration: none;">Dashboard</a></li>
-                        <li><a href="#assignments" style="color: #fff; text-decoration: none;">Assignments</a></li>
-                        <li><a href="#attendance" style="color: #fff; text-decoration: none;">Attendance</a></li>
+                        <li><a href="./dashboard.html" style="color: #fff; text-decoration: none;">Dashboard</a></li>
+                        <li><a href="./profile.html" style="color: #fff; text-decoration: none;">Profile</a></li>
+                        <li><a href="./attendancecalculator.html" style="color: #fff; text-decoration: none;">Attendance</a></li>
                         <li><a href="#contact" style="color: #fff; text-decoration: none;">Contact Us</a></li>
                     </ul>
                 </div>
@@ -623,76 +151,38 @@
                 <p>&copy; 2024 Student Assignment Tracker. All rights reserved.</p>
             </div>
         </div>
+
+        <p>&copy; 2024 EduTrack. All rights reserved.</p>
     </footer>
 
+    <script src="script.js"></script>
     <script>
-        let userRole = '';
-
-        function setRole(role) {
-            userRole = role;
+        function showSignIn(role) {
+            document.getElementById('branding-section').style.display = 'none';
             document.getElementById('role-selection').style.display = 'none';
-            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('authentication').style.display = 'block';
         }
 
-        document.getElementById('login-button').addEventListener('click', function () {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('error-message');
-
-            // Simple validation for demonstration purposes
-            if (email === '' || password === '') {
-                errorMessage.textContent = 'Please fill in both fields.';
+        function toggleForm(formType) {
+            if (formType === 'signIn') {
+                document.getElementById('signInForm').style.display = 'block';
+                document.getElementById('signUpForm').style.display = 'none';
             } else {
-                // Simulating a login process
-                errorMessage.textContent = '';
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('signInForm').style.display = 'none';
+                document.getElementById('signUpForm').style.display = 'block';
             }
-        });
+        }
+
+        function handleLogin() {
+            document.getElementById('authentication').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
 
         function logout() {
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('attendance-calculator').style.display = 'none';
-            document.getElementById('email').value = '';
-            document.getElementById('password').value = '';
-            document.getElementById('error-message').textContent = '';
-            document.getElementById('role-selection').style.display = 'flex';
-            userRole = '';
+            alert('You have been logged out.');
+            location.reload();
         }
-
-        function showAttendanceCalculator() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('attendance-calculator').style.display = 'block';
-        }
-
-        document.getElementById('attendanceForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const scheme = document.getElementById('scheme').value;
-            const startDate = new Date(document.getElementById('startDate').value);
-            const endDate = new Date(document.getElementById('endDate').value);
-            const classesPerWeek = parseInt(document.getElementById('classesPerWeek').value);
-            const internalDays = parseInt(document.getElementById('internalDays').value);
-
-            const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-            const totalClasses = Math.floor(totalDays / 7) * classesPerWeek - internalDays;
-            const maxAbsences = Math.floor(totalClasses * 0.15); // 85% attendance requirement
-
-            document.getElementById('result').innerHTML = `
-                <h2>Results:</h2>
-                <p>Total number of classes: ${totalClasses}</p>
-                <p>Maximum number of classes you can miss: ${maxAbsences}</p>
-                <p>Note: Ensure to maintain at least 85% attendance to meet the requirements.</p>
-            `;
-        });
-
-        // Display current date
-        const currentDate = new Date().toLocaleDateString();
-        document.getElementById('current-date').textContent = currentDate;
     </script>
-    <!-- Footer -->
-
 </body>
 
 </html>
