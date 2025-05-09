@@ -3,70 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VTU Attendance Calculator</title>
+    <title>EduTrack - VTU Attendance Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <style>
         body {
-            background-color: #000;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
             color: #fff;
-            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: slideInLeft 1s ease;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00ffcc;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #ff00ff;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #ff00ff;
+        }
+
+        #current-date {
+            font-size: 1em;
+            color: #e0e0e0;
+        }
+
+        #attendance-calculator {
+            max-width: 500px;
+            margin: 20px auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 30px #00ffcc;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            animation: zoomIn 0.8s ease;
+        }
+
+        #attendance-calculator h1 {
+            font-size: 2.5em;
+            color: #00ffcc;
+            text-shadow: 0 0 15px #00ffcc;
+            margin-bottom: 30px;
+        }
+
+        .form label {
+            display: block;
+            text-align: left;
+            margin: 10px 0 5px;
+            color: #e0e0e0;
+        }
+
+        .form select, .form input {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 15px;
+            border: 2px solid #00ffcc;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 1.1em;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .form select:focus, .form input:focus {
+            outline: none;
+            border-color: #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .form select {
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%2300ffcc" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+
+        .form select option {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .form select option[disabled] {
+            color: #888;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1) hue-rotate(180deg);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            filter: invert(1) hue-rotate(120deg);
+        }
+
+        .form button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(45deg, #ff00ff, #00ffcc);
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .form button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00ffcc;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        footer a {
+            color: #ff00ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #00ffcc;
+        }
+
+        footer div {
+            max-width: 1000px;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        footer div div {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li {
+            margin: 10px 0;
+        }
+
+        .social-links {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            gap: 20px;
+            flex-wrap: wrap;
         }
-        #attendance-calculator {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+
+        .social-links a {
+            font-size: 1.8em;
+            color: #00ffcc;
+            transition: none;
         }
-        h1 {
-            text-align: center;
-            color: #ff6347;
-            text-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
-        }
-        label, select, input {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-        }
-        select, input {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background: #333;
-            color: #fff;
-            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background: #ff6347;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
-        }
-        button:hover {
-            background: #ff4500;
-            box-shadow: 0 0 20px #ff4500, 0 0 30px #ff4500;
-        }
-        #result {
-            margin-top: 20px;
-            padding: 10px;
-            background: #333;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+
+        .social-links a i {
+            filter: drop-shadow(0 0 5px rgba(0, 255, 204, 0.5));
         }
     </style>
+</head>
+<body>
+    <nav class="animate__animated animate__slideInLeft">
+        <div class="logo" onclick="goToHome()">EduTrack</div>
+        <ul class="nav-links">
+            <li><a href="./dashboard.html">Dashboard</a></li>
+            <li><a href="./progress.html">Progress</a></li>
+            <li><a href="./attendancecalculator.html">VTU Attendance Calculator</a></li>
+            <li><a href="./studentpanel.html">Assignments</a></li>
+            <li><a href="./register.html">Register</a></li>
+            <li><a href="./profile.html">Profile</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+        <div id="current-date"></div>
+    </nav>
+
+    <section id="attendance-calculator">
+        <h1>VTU Attendance Calculator</h1>
+        <div class="form">
+            <form id="attendanceForm" onsubmit="openNewWindow(event)">
+                <label for="scheme">Scheme:</label>
+                <select id="scheme" required>
+                    <option value="" disabled selected>Select Scheme</option>
+                    <option value="2018">2018</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2024">2024</option>
+                </select>
+
+                <label for="startDate">Semester Start Date:</label>
+                <input type="date" id="startDate" required>
+
+                <label for="endDate">Semester End Date:</label>
+                <input type="date" id="endDate" required>
+
+                <label for="classesPerWeek">Number of Classes Per Week:</label>
+                <input type="number" id="classesPerWeek" min="1" required>
+
+                <label for="internalDays">Number of Internal Exam Days:</label>
+                <input type="number" id="internalDays" min="0" required>
+
+                <button type="submit">Calculate</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="animate__animated animate__fadeIn">
+        <div>
+            <div>
+                <h3>About Us</h3>
+                <p>The Student Assignment Tracker is designed to help students manage assignments, track deadlines, and receive feedback—all in one place. Our goal is to make learning more organized and stress-free.</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./dashboard.html">Dashboard</a></li>
+                    <li><a href="./profile.html">Profile</a></li>
+                    <li><a href="./attendancecalculator.html">Attendance</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contact Us</h3>
+                <p>Email: <a href="mailto:support@edutrack.com">support@edutrack.com</a></p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+            <div>
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p>© 2025 EduTrack. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script>
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+
+        function logout() {
+            alert('You have been logged out.');
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
+        }
+
         function calculateClassesToMiss(classesPerWeek, internalDays, totalWeeks, attendancePercent) {
             const totalClasses = (totalWeeks * classesPerWeek) - internalDays;
             const requiredClasses = Math.ceil(totalClasses * (attendancePercent / 100));
             const maxClassesToMiss = totalClasses - requiredClasses;
             return maxClassesToMiss;
+        }
+
+        function validateDates(startDate, endDate) {
+            return endDate > startDate;
         }
 
         function openNewWindow(event) {
@@ -77,13 +327,21 @@
             const classesPerWeek = parseInt(document.getElementById("classesPerWeek").value, 10);
             const internalDays = parseInt(document.getElementById("internalDays").value, 10);
 
-            // Calculate the number of weeks in the semester
-            const totalWeeks = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24 * 7));
+            if (!scheme || isNaN(classesPerWeek) || isNaN(internalDays) || !startDate || !endDate) {
+                alert("Please fill all fields correctly.");
+                return;
+            }
 
-            // Calculate the maximum number of classes to miss to maintain 85% attendance
+            if (!validateDates(startDate, endDate)) {
+                alert("Semester end date must be after the start date.");
+                return;
+            }
+
+            const totalWeeks = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24 * 7));
             const maxClassesToMiss = calculateClassesToMiss(classesPerWeek, internalDays, totalWeeks, 85);
 
             const resultPage = `
+            <!DOCTYPE html>
             <html lang='en'>
             <head>
                 <meta charset='UTF-8'>
@@ -91,7 +349,7 @@
                 <title>Calculation Result</title>
                 <style>
                     body {
-                        background-color: #000;
+                        background: #1a1a1a;
                         color: #fff;
                         font-family: Arial, sans-serif;
                         display: flex;
@@ -101,18 +359,24 @@
                         margin: 0;
                     }
                     #result-container {
-                        background: #1a1a1a;
-                        padding: 20px;
-                        border-radius: 10px;
-                        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+                        max-width: 500px;
+                        background: rgba(0, 0, 0, 0.8);
+                        padding: 40px;
+                        border-radius: 20px;
+                        border: 2px solid #00ffcc;
+                        box-shadow: 0 0 30px #00ffcc;
+                        backdrop-filter: blur(10px);
                         text-align: center;
                     }
                     h1 {
-                        color: #ff6347;
-                        text-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
+                        font-size: 2em;
+                        color: #00ffcc;
+                        text-shadow: 0 0 15px #00ffcc;
+                        margin-bottom: 20px;
                     }
                     p {
                         margin: 10px 0;
+                        color: #e0e0e0;
                     }
                 </style>
             </head>
@@ -130,41 +394,81 @@
                 </div>
             </body>
             </html>`;
-            
-            const newWindow = window.open();
-            newWindow.document.write(resultPage);
+
+            const newWindow = window.open('', '_blank');
+            if (newWindow) {
+                newWindow.document.write(resultPage);
+                newWindow.document.close();
+            } else {
+                alert("Please allow pop-ups to view the result.");
+            }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const startDateInput = document.getElementById('startDate');
+            const endDateInput = document.getElementById('endDate');
+
+            startDateInput.addEventListener('change', () => {
+                const startDate = new Date(startDateInput.value);
+                if (startDate) {
+                    const minEndDate = new Date(startDate);
+                    minEndDate.setDate(startDate.getDate() + 1);
+                    endDateInput.min = minEndDate.toISOString().split('T')[0];
+                }
+            });
+
+            endDateInput.addEventListener('change', () => {
+                const startDate = new Date(startDateInput.value);
+                const endDate = new Date(endDateInput.value);
+                if (startDate && endDate && !validateDates(startDate, endDate)) {
+                    alert("Semester end date must be after the start date.");
+                    endDateInput.value = '';
+                }
+            });
+        });
+
+        window.onload = function() {
+            if (localStorage.getItem('loggedIn') !== 'true') {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const currentDateElement = document.getElementById('current-date');
+            if (currentDateElement) {
+                currentDateElement.textContent = new Date().toLocaleDateString();
+            }
+
+            document.querySelectorAll('.form button').forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    gsap.to(btn, { scale: 1.1, boxShadow: '0 0 25px #00ffcc', duration: 0.3 });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { scale: 1, boxShadow: '0 0 15px #ff00ff', duration: 0.3 });
+                });
+            });
+
+            document.querySelectorAll('.social-icon').forEach(icon => {
+                icon.addEventListener('mouseenter', () => {
+                    gsap.to(icon, {
+                        scale: 1.3,
+                        rotation: 15,
+                        filter: 'drop-shadow(0 0 15px rgba(0, 255, 204, 1))',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+                icon.addEventListener('mouseleave', () => {
+                    gsap.to(icon, {
+                        scale: 1,
+                        rotation: 0,
+                        filter: 'drop-shadow(0 0 5px rgba(0, 255, 204, 0.5))',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+            });
+        };
     </script>
-</head>
-<body>
-    <section id="attendance-calculator">
-        <h1>VTU Attendance Calculator</h1>
-        <form id="attendanceForm" onsubmit="openNewWindow(event)">
-            <label for="scheme">Scheme:</label>
-            <select id="scheme" required>
-                <option value="">Select Scheme</option>
-                <option value="2018">2018</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2024">2024</option>
-            </select>
-
-            <label for="startDate">Semester Start Date:</label>
-            <input type="date" id="startDate" required>
-
-            <label for="endDate">Semester End Date:</label>
-            <input type="date" id="endDate" required>
-
-            <label for="classesPerWeek">Number of Classes Per Week:</label>
-            <input type="number" id="classesPerWeek" min="1" required>
-
-            <label for="internalDays">Number of Internal Exam Days:</label>
-            <input type="number" id="internalDays" min="0" required>
-
-            <button type="submit">Calculate</button>
-        </form>
-
-        <div id="result"></div>
-    </section>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93cdeab84df6c015',t:'MTc0Njc1OTMxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
