@@ -1,280 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Submit Assignment</title>
-	<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduTrack - Student Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            background: #1a1a1a;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: slideInLeft 1s ease;
+        }
 
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00ffcc;
+        }
 
-</html>
-<!DOCTYPE html>
-<html lang="en">
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding: 0;
+        }
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Submit Assignment</title>
-	<link rel="stylesheet" href="styles.css">
-	<style>
-		/* General Reset */
-		body {
-			margin: 0;
-			padding: 0;
-			font-family: 'Poppins', sans-serif;
-			background: linear-gradient(135deg, #1a1a1a, #000);
-			color: #fff;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-		}
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
 
-		/* Container Styles */
-		.container {
-			max-width: 600px;
-			width: 90%;
-			background: rgba(255, 255, 255, 0.1);
-			backdrop-filter: blur(10px);
-			border-radius: 15px;
-			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
-			padding: 30px;
-			color: #fff;
-			text-align: center;
-		}
+        .nav-links li a:hover {
+            color: #ff00ff;
+        }
 
-		/* Header Styles */
-		header h1 {
-			font-size: 2rem;
-			color: #f5f5f5;
-			margin-bottom: 5px;
-			text-shadow: 0 0 10px #007bff, 0 0 20px #007bff;
-		}
+        #current-date {
+            font-size: 1em;
+            color: #e0e0e0;
+        }
 
-		header p {
-			font-size: 0.9rem;
-			color: #aaa;
-			margin-bottom: 20px;
-		}
+        .panel-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 30px #00ffcc;
+            border: 2px solid #00ffcc;
+            animation: fadeInUp 1s ease;
+        }
 
-		/* Form Styles */
-		form {
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-		}
+        .panel-container h2 {
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
+        }
 
-		.form-group {
-			display: flex;
-			flex-direction: column;
-			text-align: left;
-		}
+        .assignment-form {
+            margin-bottom: 20px;
+        }
 
-		label {
-			font-size: 0.9rem;
-			margin-bottom: 5px;
-			color: #ddd;
-		}
+        .assignment-form input, .assignment-form select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 2px solid #00ffcc;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 1.1em;
+        }
 
-		input,
-		select {
-			padding: 10px;
-			font-size: 1rem;
-			border: 1px solid rgba(255, 255, 255, 0.2);
-			border-radius: 8px;
-			background: rgba(255, 255, 255, 0.1);
-			color: #fff;
-			transition: all 0.3s ease;
-		}
+        .action-btn {
+            padding: 8px 15px;
+            background: linear-gradient(45deg, #ff00ff, #00ffcc);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px #ff00ff;
+            margin-top: 10px;
+        }
 
-		input:focus,
-		select:focus {
-			border-color: #007bff;
-			outline: none;
-			box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
-		}
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00ffcc;
+        }
 
-		input:hover,
-		select:hover {
-			background: rgba(255, 255, 255, 0.2);
-		}
+        .assignment-list {
+            margin-top: 20px;
+        }
 
-		/* Submit Button */
-		button.submit-button {
-			padding: 12px 20px;
-			font-size: 1rem;
-			color: #fff;
-			background: linear-gradient(135deg, #007bff, #00d4ff);
-			border: none;
-			border-radius: 8px;
-			cursor: pointer;
-			transition: all 0.3s ease;
-			text-transform: uppercase;
-			font-weight: bold;
-			box-shadow: 0 4px 15px rgba(0, 123, 255, 0.6);
-		}
+        .assignment-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
 
-		button.submit-button:hover {
-			background: linear-gradient(135deg, #00d4ff, #007bff);
-			box-shadow: 0 6px 20px rgba(0, 123, 255, 0.8);
-			transform: translateY(-3px);
-		}
+        .assignment-card:hover {
+            transform: translateY(-5px);
+        }
 
-		/* Input File Styling */
-		input[type="file"] {
-			padding: 10px;
-			font-size: 0.9rem;
-			background: rgba(255, 255, 255, 0.1);
-			border: 1px solid rgba(255, 255, 255, 0.2);
-			border-radius: 8px;
-			color: #ddd;
-			cursor: pointer;
-		}
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
 
-		input[type="file"]::-webkit-file-upload-button {
-			padding: 8px 15px;
-			color: #fff;
-			background: linear-gradient(135deg, #ff0080, #ff0080);
-			border: none;
-			border-radius: 8px;
-			cursor: pointer;
-			transition: all 0.3s ease;
-		}
+        footer a {
+            color: #ff00ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-		input[type="file"]::-webkit-file-upload-button:hover {
-			background: linear-gradient(135deg, #ff3d8b, #ff0080);
-			box-shadow: 0 4px 10px rgba(255, 0, 128, 0.6);
-			transform: translateY(-3px);
-		}
+        footer a:hover {
+            color: #00ffcc;
+        }
 
-		/* Glassmorphism Shadow Effect */
-		.form-group input,
-		.form-group select {
-			box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.4);
-		}
+        footer div {
+            max-width: 1000px;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
 
-		input[type="date"]::-webkit-calendar-picker-indicator {
-			filter: invert(1);
-		}
+        footer div div {
+            flex: 1;
+            min-width: 200px;
+        }
 
-		/* Responsive Design */
-		@media screen and (max-width: 768px) {
-			header h1 {
-				font-size: 1.5rem;
-			}
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
 
-			button.submit-button {
-				font-size: 0.9rem;
-				background-color: #0056b3;
-			}
-		}
+        footer ul li {
+            margin: 10px 0;
+        }
 
-		/* Existing CSS code from your question */
-	</style>
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            font-size: 1.8em;
+            color: #00ffcc;
+            transition: none;
+        }
+
+        .social-links a i {
+            filter: drop-shadow(0 0 5px rgba(0, 255, 204, 0.5));
+        }
+    </style>
 </head>
-
 <body>
-	<div class="container">
-		<header>
-			<h1>Submit Assignment</h1>
-			<p>Logged in as ATS-APP</p>
-		</header>
-		<form id="studentAssignmentForm">
-			<div class="form-group">
-				<label for="username">Username</label>
-				<input type="text" id="username" placeholder="Enter username" required>
-			</div>
-			<div class="form-group">
-				<label for="assignment">Assignment</label>
-				<select id="assignment" required>
-					<option value="">Choose Assignment</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="file">File</label>
-				<input type="file" id="file" required>
-			</div>
-			<button type="submit" class="submit-button">Submit</button>
-		</form>
-	</div>
+    <nav class="animate__animated animate__slideInLeft">
+        <div class="logo">EduTrack</div>
+        <ul class="nav-links">
+            <li><a href="./dashboard.html">Dashboard</a></li>
+            <li><a href="./progress.html">Progress</a></li>
+            <li><a href="./attendancecalculator.html">VTU Attendance Calculator</a></li>
+            <li><a href="./studentpanel.html">Assignments</a></li>
+            <li><a href="./register.html">Register</a></li>
+            <li><a href="./profile.html">Profile</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+        <div id="current-date"></div>
+    </nav>
 
-	<script>
-		// Student Panel Script to Integrate with Dashboard's AssignmentTracker
+    <div class="panel-container animate__animated animate__fadeInUp">
+        <h2>Student Panel - Manage Assignments</h2>
+        <div class="assignment-form">
+            <h3>Add Assignment</h3>
+            <input type="text" id="assignmentTitle" placeholder="Assignment Title" required>
+            <input type="text" id="assignmentSubject" placeholder="Subject" required>
+            <input type="date" id="assignmentDueDate" required>
+            <select id="assignmentStatus" required>
+                <option value="Not Started">Not Started</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <button class="action-btn" onclick="addAssignment()">Add Assignment</button>
+        </div>
+        <div class="assignment-list" id="assignmentList">
+            <h3>Your Assignments</h3>
+            <!-- Assignments will be dynamically added here -->
+        </div>
+    </div>
 
-		class StudentPanel {
-			constructor() {
-				this.assignments = [];
-				this.init();
-			}
+    <footer class="animate__animated animate__fadeIn">
+        <div>
+            <div>
+                <h3>About Us</h3>
+                <p>The Student Assignment Tracker is designed to help students manage assignments, track deadlines, and receive feedback—all in one place. Our goal is to make learning more organized and stress-free.</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./dashboard.html">Dashboard</a></li>
+                    <li><a href="./profile.html">Profile</a></li>
+                    <li><a href="./attendancecalculator.html">Attendance</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contact Us</h3>
+                <p>Email: <a href="mailto:support@edutrack.com">support@edutrack.com</a></p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+            <div>
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p>© 2025 EduTrack. All rights reserved.</p>
+        </div>
+    </footer>
 
-			// Initialize the student panel
-			init() {
-				this.loadAssignmentsFromDashboard();
-				document.getElementById('studentAssignmentForm').addEventListener('submit', (e) => this.submitAssignment(e));
-			}
+    <script>
+        function logout() {
+            alert('You have been logged out.');
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
+        }
 
-			// Load assignments from dashboard's localStorage
-			loadAssignmentsFromDashboard() {
-				const storedAssignments = JSON.parse(localStorage.getItem('assignments')) || [];
-				this.assignments = storedAssignments;
-				this.populateAssignmentsDropdown();
-			}
+        function addAssignment() {
+            const title = document.getElementById('assignmentTitle').value.trim();
+            const subject = document.getElementById('assignmentSubject').value.trim();
+            const dueDate = document.getElementById('assignmentDueDate').value;
+            const status = document.getElementById('assignmentStatus').value;
 
-			// Populate assignments dropdown
-			populateAssignmentsDropdown() {
-				const assignmentDropdown = document.getElementById('assignment');
-				assignmentDropdown.innerHTML = `<option value="">Choose Assignment</option>`; // Reset options
+            if (!title || !subject || !dueDate || !status) {
+                alert('Please fill in all fields.');
+                return;
+            }
 
-				this.assignments.forEach((assignment, index) => {
-					const option = document.createElement('option');
-					option.value = index; // Use the index as the value
-					option.textContent = `${assignment.subject} - ${assignment.title} (Deadline: ${assignment.deadline})`;
-					assignmentDropdown.appendChild(option);
-				});
-			}
+            const userEmail = localStorage.getItem('userEmail') || '';
+            let assignments = [];
+            try {
+                const storedAssignments = localStorage.getItem(`assignments_${userEmail}`);
+                assignments = storedAssignments ? JSON.parse(storedAssignments) : [];
+            } catch (e) {
+                console.error('Error parsing assignments from localStorage:', e);
+                alert('Error saving assignment. Please try again.');
+                return;
+            }
 
-			// Handle assignment submission
-			submitAssignment(e) {
-				e.preventDefault(); // Prevent page reload
+            const assignment = { id: Date.now(), title, subject, dueDate, status };
+            assignments.push(assignment);
 
-				const username = document.getElementById('username').value;
-				const assignmentIndex = document.getElementById('assignment').value;
-				const fileInput = document.getElementById('file');
+            try {
+                localStorage.setItem(`assignments_${userEmail}`, JSON.stringify(assignments));
+            } catch (e) {
+                console.error('Error saving to localStorage:', e);
+                alert('Error saving assignment. Please try again.');
+                return;
+            }
 
-				if (assignmentIndex === "") {
-					alert("Please select an assignment.");
-					return;
-				}
+            displayAssignments();
+            document.getElementById('assignmentTitle').value = '';
+            document.getElementById('assignmentSubject').value = '';
+            document.getElementById('assignmentDueDate').value = '';
+            document.getElementById('assignmentStatus').value = 'Not Started';
+        }
 
-				if (fileInput.files.length === 0) {
-					alert("Please upload a file.");
-					return;
-				}
+        function displayAssignments() {
+            const userEmail = localStorage.getItem('userEmail') || '';
+            let assignments = [];
+            try {
+                const storedAssignments = localStorage.getItem(`assignments_${userEmail}`);
+                assignments = storedAssignments ? JSON.parse(storedAssignments) : [];
+            } catch (e) {
+                console.error('Error parsing assignments from localStorage:', e);
+                return;
+            }
 
-				const selectedAssignment = this.assignments[assignmentIndex];
-				const uploadedFile = fileInput.files[0];
+            const assignmentList = document.getElementById('assignmentList');
+            assignmentList.innerHTML = '<h3>Your Assignments</h3>';
+            assignments.forEach(assignment => {
+                const card = document.createElement('div');
+                card.className = 'assignment-card animate__animated animate__fadeIn';
+                card.innerHTML = `
+                    <div>
+                        <strong>${assignment.title}</strong> (${assignment.subject})<br>
+                        Due: ${assignment.dueDate} | Status: ${assignment.status}
+                    </div>
+                    <div>
+                        <button class="action-btn" onclick="editAssignment(${assignment.id})">Edit</button>
+                        <button class="action-btn" onclick="deleteAssignment(${assignment.id})">Delete</button>
+                    </div>
+                `;
+                assignmentList.appendChild(card);
+            });
+        }
 
-				// Log the submitted data (or send it to an API)
-				const submission = {
-					username,
-					assignment: selectedAssignment,
-					fileName: uploadedFile.name,
-					timestamp: new Date().toISOString(),
-				};
+        function editAssignment(id) {
+            const userEmail = localStorage.getItem('userEmail') || '';
+            let assignments = [];
+            try {
+                const storedAssignments = localStorage.getItem(`assignments_${userEmail}`);
+                assignments = storedAssignments ? JSON.parse(storedAssignments) : [];
+            } catch (e) {
+                console.error('Error parsing assignments from localStorage:', e);
+                return;
+            }
 
-				console.log("Assignment Submission:", submission);
+            const assignment = assignments.find(a => a.id === id);
+            if (assignment) {
+                const newTitle = prompt('Enter new title:', assignment.title);
+                const newSubject = prompt('Enter new subject:', assignment.subject);
+                const newDueDate = prompt('Enter new due date (YYYY-MM-DD):', assignment.dueDate);
+                const newStatus = prompt('Enter new status (Not Started, In Progress, Completed):', assignment.status);
 
-				// Clear the form
-				document.getElementById('studentAssignmentForm').reset();
-				alert("Assignment submitted successfully!");
-			}
-		}
+                if (newTitle && newSubject && newDueDate && newStatus) {
+                    assignment.title = newTitle;
+                    assignment.subject = newSubject;
+                    assignment.dueDate = newDueDate;
+                    assignment.status = newStatus;
+                    try {
+                        localStorage.setItem(`assignments_${userEmail}`, JSON.stringify(assignments));
+                        displayAssignments();
+                    } catch (e) {
+                        console.error('Error saving to localStorage:', e);
+                        alert('Error updating assignment. Please try again.');
+                    }
+                }
+            }
+        }
 
-		// Initialize the student panel
-		new StudentPanel();
-	</script>
+        function deleteAssignment(id) {
+            const userEmail = localStorage.getItem('userEmail') || '';
+            let assignments = [];
+            try {
+                const storedAssignments = localStorage.getItem(`assignments_${userEmail}`);
+                assignments = storedAssignments ? JSON.parse(storedAssignments) : [];
+            } catch (e) {
+                console.error('Error parsing assignments from localStorage:', e);
+                return;
+            }
+
+            assignments = assignments.filter(a => a.id !== id);
+            try {
+                localStorage.setItem(`assignments_${userEmail}`, JSON.stringify(assignments));
+                displayAssignments();
+            } catch (e) {
+                console.error('Error saving to localStorage:', e);
+                alert('Error deleting assignment. Please try again.');
+            }
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem('loggedIn') !== 'true') {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const userRole = localStorage.getItem('userRole') || '';
+            if (userRole !== 'student') {
+                alert('Access denied. This page is for students only.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const currentDateElement = document.getElementById('current-date');
+            if (currentDateElement) {
+                currentDateElement.textContent = new Date().toLocaleDateString();
+            }
+
+            displayAssignments();
+
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    gsap.to(btn, { scale: 1.1, boxShadow: '0 0 25px #00ffcc', duration: 0.3 });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { scale: 1, boxShadow: '0 0 15px #ff00ff', duration: 0.3 });
+                });
+            });
+
+            document.querySelectorAll('.social-icon').forEach(icon => {
+                icon.addEventListener('mouseenter', () => {
+                    gsap.to(icon, {
+                        scale: 1.3,
+                        rotation: 15,
+                        filter: 'drop-shadow(0 0 15px rgba(0, 255, 204, 1))',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+                icon.addEventListener('mouseleave', () => {
+                    gsap.to(icon, {
+                        scale: 1,
+                        rotation: 0,
+                        filter: 'drop-shadow(0 0 5px rgba(0, 255, 204, 0.5))',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+            });
+        };
+    </script>
 </body>
-
-</html>
+</html>              
