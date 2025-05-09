@@ -1,43 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Progress Board</title>
-    <link rel="stylesheet" href="progress-board.css">
-</head>
+    <title>EduTrack - Progress</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="stylesheet" href="progress-board.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            background: #1a1a1a;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: slideInLeft 1s ease;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00ffcc;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #ff00ff;
+        }
+
+        #current-date {
+            font-size: 1em;
+            color: #e0e0e0;
+        }
+
+        .progress-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 30px #00ffcc;
+            border: 2px solid #00ffcc;
+            animation: fadeInUp 1s ease;
+        }
+
+        .progress-container h2 {
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+
+        .progress-board {
+            margin-top: 20px;
+        }
+
+        .progress-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .progress-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .progress-bar {
+            width: 100%;
+            background: #555;
+            border-radius: 5px;
+            height: 20px;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #ff00ff, #00ffcc);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        footer a {
+            color: #ff00ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #00ffcc;
+        }
+
+        footer div {
+            max-width: 1000px;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        footer div div {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li {
+            margin: 10px 0;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            font-size: 1.8em;
+            color: #00ffcc;
+            transition: none;
+        }
+
+        .social-links a i {
+            filter: drop-shadow(0 0 5px rgba(0, 255, 204, 0.5));
+        }
+    </style>
+</head>
 <body>
-    <!-- Progress Board Section -->
-    <section id="progress-board" class="batman-theme">
+    <nav class="animate__animated animate__slideInLeft">
+        <div class="logo" onclick="goToHome()">EduTrack</div>
+        <ul class="nav-links">
+            <li><a href="./dashboard.html">Dashboard</a></li>
+            <li><a href="./progress.html">Progress</a></li>
+            <li><a href="./attendancecalculator.html">VTU Attendance Calculator</a></li>
+            <li><a href="./studentpanel.html">Assignments</a></li>
+            <li><a href="./register.html">Register</a></li>
+            <li><a href="./profile.html">Profile</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+        <div id="current-date"></div>
+    </nav>
+
+    <div class="progress-container animate__animated animate__fadeInUp">
         <h2>Progress Board</h2>
-        <div class="container">
-            <h3>Assignment Analysis</h3>
-            <div class="stats">
-                <div class="stat">
-                    <h4>Completed Assignments</h4>
-                    <p id="completed-assignments">0</p>
-                </div>
-                <div class="stat">
-                    <h4>Pending Assignments</h4>
-                    <p id="pending-assignments">0</p>
-                </div>
-                <div class="stat">
-                    <h4>Overdue Assignments</h4>
-                    <p id="overdue-assignments">0</p>
-                </div>
+        <div class="progress-board" id="progressBoard">
+            <!-- Progress will be dynamically added here -->
+        </div>
+    </div>
+
+    <footer class="animate__animated animate__fadeIn">
+        <div>
+            <div>
+                <h3>About Us</h3>
+                <p>The Student Assignment Tracker is designed to help students manage assignments, track deadlines, and receive feedback—all in one place. Our goal is to make learning more organized and stress-free.</p>
             </div>
-            <div class="progress-bar">
-                <h4>Overall Progress</h4>
-                <div class="progress-container">
-                    <div id="overall-progress" class="progress">0%</div>
+            <div>
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./dashboard.html">Dashboard</a></li>
+                    <li><a href="./profile.html">Profile</a></li>
+                    <li><a href="./attendancecalculator.html">Attendance</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contact Us</h3>
+                <p>Email: <a href="/cdn-cgi/l/email-protection#a0939590908f9294a0858495949281838bce838f8d"><span class="__cf_email__" data-cfemail="c2f1f7f2f2edf0f6c2e7e6f7f6f0e3e1e9ace1edef">[email&#160;protected]</span></a></p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+            <div>
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
-    </section>
+        <div>
+            <p>© 2025 EduTrack. All rights reserved.</p>
+        </div>
+    </footer>
 
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="progress-board.js"></script>
-</body>
+    <script>
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
 
+        function logout() {
+            alert('You have been logged out.');
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
+        }
+
+        function displayProgress() {
+            const userRole = localStorage.getItem('userRole') || '';
+            const userEmail = localStorage.getItem('userEmail') || '';
+            const progressBoard = document.getElementById('progressBoard');
+            progressBoard.innerHTML = '';
+
+            let users = {};
+            try {
+                const storedUsers = localStorage.getItem('users');
+                users = storedUsers ? JSON.parse(storedUsers) : {};
+            } catch (e) {
+                console.error('Error parsing users from localStorage:', e);
+                return;
+            }
+
+            if (userRole === 'student') {
+                let assignments = [];
+                try {
+                    const storedAssignments = localStorage.getItem(`assignments_${userEmail}`);
+                    assignments = storedAssignments ? JSON.parse(storedAssignments) : [];
+                } catch (e) {
+                    console.error('Error parsing assignments from localStorage:', e);
+                    return;
+                }
+
+                const totalAssignments = assignments.length;
+                const completedAssignments = assignments.filter(a => a.status === 'Completed').length;
+                const completionRate = totalAssignments ? (completedAssignments / totalAssignments) * 100 : 0;
+
+                const card = document.createElement('div');
+                card.className = 'progress-card animate__animated animate__fadeIn';
+                card.innerHTML = `
+                    <div>
+                        <strong>Your Progress</strong><br>
+                        Completed: ${completedAssignments} / ${totalAssignments} assignments<br>
+                        Completion Rate: ${completionRate.toFixed(2)}%
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${completionRate}%"></div>
+                    </div>
+                `;
+                progressBoard.appendChild(card);
+
+                assignments.forEach(assignment => {
+                    const assignmentCard = document.createElement('div');
+                    assignmentCard.className = 'progress-card animate__animated animate__fadeIn';
+                    assignmentCard.innerHTML = `
+                        <div>
+                            <strong>${assignment.title}</strong> (${assignment.subject})<br>
+                            Due: ${assignment.dueDate} | Status: ${assignment.status} | Grade: ${assignment.grade || 'Not Graded'}
+                        </div>
+                    `;
+                    progressBoard.appendChild(assignmentCard);
+                });
+            } else if (userRole === 'educator') {
+                Object.keys(users).forEach(email => {
+                    if (users[email].role === 'student') {
+                        let assignments = [];
+                        try {
+                            const storedAssignments = localStorage.getItem(`assignments_${email}`);
+                            assignments = storedAssignments ? JSON.parse(storedAssignments) : [];
+                        } catch (e) {
+                            console.error('Error parsing assignments for', email, ':', e);
+                            return;
+                        }
+
+                        const totalAssignments = assignments.length;
+                        const completedAssignments = assignments.filter(a => a.status === 'Completed').length;
+                        const completionRate = totalAssignments ? (completedAssignments / totalAssignments) * 100 : 0;
+
+                        const card = document.createElement('div');
+                        card.className = 'progress-card animate__animated animate__fadeIn';
+                        card.innerHTML = `
+                            <div>
+                                <strong>${users[email].name} (${email})</strong><br>
+                                Completed: ${completedAssignments} / ${totalAssignments} assignments<br>
+                                Completion Rate: ${completionRate.toFixed(2)}%
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${completionRate}%"></div>
+                            </div>
+                        `;
+                        progressBoard.appendChild(card);
+                    }
+                });
+            }
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem('loggedIn') !== 'true') {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const currentDateElement = document.getElementById('current-date');
+            if (currentDateElement) {
+                currentDateElement.textContent = new Date().toLocaleDateString();
+            }
+
+            displayProgress();
+
+            document.querySelectorAll('.social-icon').forEach(icon => {
+                icon.addEventListener('mouseenter', () => {
+                    gsap.to(icon, {
+                        scale: 1.3,
+                        rotation: 15,
+                        filter: 'drop-shadow(0 0 15px rgba(0, 255, 204, 1))',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+                icon.addEventListener('mouseleave', () => {
+                    gsap.to(icon, {
+                        scale: 1,
+                        rotation: 0,
+                        filter: 'drop-shadow(0 0 5px rgba(0, 255, 204, 0.5))',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+            });
+        };
+    </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93d1665a8a76afb9',t:'MTc0Njc5NTgzNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
 </html>
