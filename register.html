@@ -1,167 +1,371 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Forms</title>
+    <title>EduTrack - Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <style>
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-        }
-
-        .registration-section {
-            display: none;
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-            width: 300px;
-        }
-
-        .button-container {
-            text-align: center;
-        }
-
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            background: #ff6347;
+            font-family: 'Arial', sans-serif;
             color: #fff;
+            background: #1a1a1a;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: slideInLeft 1s ease;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00ffcc;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #ff00ff;
+        }
+
+        #current-date {
+            font-size: 1em;
+            color: #e0e0e0;
+        }
+
+        .auth-container {
+            max-width: 400px;
+            margin: 20px auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 30px #00ffcc;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            animation: zoomIn 0.8s ease;
+        }
+
+        .auth-container h2 {
+            font-size: 2.5em;
+            color: #00ffcc;
+            text-shadow: 0 0 15px #00ffcc;
+            margin-bottom: 30px;
+        }
+
+        .form input, .form select {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #00ffcc;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 1.1em;
+        }
+
+        .form input::placeholder {
+            color: #bbb;
+        }
+
+        .form input:focus, .form select:focus {
+            outline: none;
+            border-color: #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .form button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(45deg, #ff00ff, #00ffcc);
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
+            box-shadow: 0 0 15px #ff00ff;
         }
 
-        button:hover {
-            background: #ff4500;
-            box-shadow: 0 0 20px #ff4500, 0 0 30px #ff4500;
+        .form button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00ffcc;
         }
 
-        h2 {
+        .error-message {
+            color: #ff5555;
+            font-size: 1em;
+            margin-top: 10px;
+            display: none;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
             text-align: center;
-            color: #ff6347;
-            text-shadow: 0 0 10px #ff6347, 0 0 20px #ff6347;
+            animation: fadeIn 1s ease;
         }
 
-        label,
-        input,
-        select {
-            display: block;
-            width: 100%;
+        footer a {
+            color: #ff00ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #00ffcc;
+        }
+
+        footer div {
+            max-width: 1000px;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        footer div div {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li {
             margin: 10px 0;
         }
 
-        input,
-        select {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background: #333;
-            color: #fff;
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            font-size: 1.8em;
+            color: #00ffcc;
+            transition: none;
+        }
+
+        .social-links a i {
+            filter: drop-shadow(0 0 5px rgba(0, 255, 204, 0.5));
         }
     </style>
 </head>
-
 <body>
-    <div class="button-container">
-        <button onclick="showForm('student')">Register as Student</button>
-        <button onclick="showForm('educator')">Register as Educator</button>
+    <nav class="animate__animated animate__slideInLeft">
+        <div class="logo">EduTrack</div>
+        <ul class="nav-links">
+            <li><a href="./dashboard.html">Dashboard</a></li>
+            <li><a href="./progress.html">Progress</a></li>
+            <li><a href="./attendancecalculator.html">VTU Attendance Calculator</a></li>
+            <li><a href="./studentpanel.html">Assignments</a></li>
+            <li><a href="./register.html">Register</a></li>
+            <li><a href="./profile.html">Profile</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+        <div id="current-date"></div>
+    </nav>
+
+    <div class="auth-container">
+        <h2>Register for EduTrack</h2>
+        <div class="form">
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <select id="userRole" required>
+                    <option value="">Select Role</option>
+                    <option value="student">Student</option>
+                    <option value="educator">Educator</option>
+                </select>
+                <input type="text" id="registerName" placeholder="Full Name" required>
+                <input type="email" id="registerEmail" placeholder="Email" required>
+                <input type="password" id="registerPassword" placeholder="Password" required>
+                <button type="submit">Register</button>
+                <p class="error-message" id="registerError">Email already exists.</p>
+            </form>
+        </div>
     </div>
 
-    <section id="registration" class="registration-section">
-        <h2>Student Registration</h2>
-        <form id="studentForm" action="#" method="post" onsubmit="openStudentForm(event)">
-            <label for="studentName">Full Name:</label>
-            <input type="text" id="studentName" name="studentName" required>
-
-            <label for="studentEmail">Email:</label>
-            <input type="email" id="studentEmail" name="studentEmail" required>
-
-            <label for="studentPassword">Password:</label>
-            <input type="password" id="studentPassword" name="studentPassword" required>
-
-            <label for="studentID">Student ID:</label>
-            <input type="text" id="studentID" name="studentID" required>
-
-            <label for="yearAndSemester">Year & Semester:</label>
-            <select id="yearAndSemester" name="yearAndSemester" required>
-                <option value="">Select Year & Semester</option>
-                <option value="1st Year - Semester 1">1st Year - Semester 1</option>
-                <option value="1st Year - Semester 2">1st Year - Semester 2</option>
-                <option value="2nd Year - Semester 3">2nd Year - Semester 3</option>
-                <option value="2nd Year - Semester 4">2nd Year - Semester 4</option>
-                <option value="3rd Year - Semester 5">3rd Year - Semester 5</option>
-                <option value="3rd Year - Semester 6">3rd Year - Semester 6</option>
-                <option value="4th Year - Semester 7">4th Year - Semester 7</option>
-                <option value="4th Year - Semester 8">4th Year - Semester 8</option>
-            </select>
-
-            <label for="major">Major/Subject Focus (optional):</label>
-            <input type="text" id="major" name="major">
-
-            <button type="submit">Register as Student</button>
-        </form>
-    </section>
-
-    <section id="educator-registration" class="registration-section">
-        <h2>Educator Registration</h2>
-        <form id="educatorForm" action="#" method="post" onsubmit="openEducatorForm(event)">
-            <label for="educatorName">Full Name:</label>
-            <input type="text" id="educatorName" name="educatorName" required>
-
-            <label for="educatorEmail">Email:</label>
-            <input type="email" id="educatorEmail" name="educatorEmail" required>
-
-            <label for="educatorPassword">Password:</label>
-            <input type="password" id="educatorPassword" name="educatorPassword" required>
-
-            <label for="educatorID">Educator ID (if applicable):</label>
-            <input type="text" id="educatorID" name="educatorID">
-
-            <label for="institution">Institution:</label>
-            <input type="text" id="institution" name="institution" required>
-
-            <label for="department">Department:</label>
-            <input type="text" id="department" name="department" required>
-
-            <label for="subject">Subjects Taught:</label>
-            <input type="text" id="subject" name="subject" required>
-
-            <button type="submit">Register as Educator</button>
-        </form>
-    </section>
+    <footer class="animate__animated animate__fadeIn">
+        <div>
+            <div>
+                <h3>About Us</h3>
+                <p>The Student Assignment Tracker is designed to help students manage assignments, track deadlines, and receive feedback—all in one place. Our goal is to make learning more organized and stress-free.</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./dashboard.html">Dashboard</a></li>
+                    <li><a href="./profile.html">Profile</a></li>
+                    <li><a href="./attendancecalculator.html">Attendance</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contact Us</h3>
+                <p>Email: <a href="mailto:support@edutrack.com">support@edutrack.com</a></p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+            <div>
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p>© 2025 EduTrack. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
-        function showForm(type) {
-            document.getElementById("registration").style.display = type === "student" ? "block" : "none";
-            document.getElementById("educator-registration").style.display = type === "educator" ? "block" : "none";
+        function logout() {
+            alert('You have been logged out.');
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
         }
 
-        function openStudentForm(event) {
+        function handleRegister(event) {
             event.preventDefault();
-            const formData = new FormData(event.target);
-            const studentData = Object.fromEntries(formData.entries());
-            alert(`Student Registered: ${JSON.stringify(studentData)}`);
+            const roleElement = document.getElementById('userRole');
+            const nameElement = document.getElementById('registerName');
+            const emailElement = document.getElementById('registerEmail');
+            const passwordElement = document.getElementById('registerPassword');
+            const registerError = document.getElementById('registerError');
+
+            if (!roleElement || !nameElement || !emailElement || !passwordElement) {
+                registerError.textContent = 'Form elements not found. Please refresh the page.';
+                registerError.style.display = 'block';
+                return;
+            }
+
+            const userRole = roleElement.value;
+            const name = nameElement.value.trim();
+            const email = emailElement.value.trim();
+            const password = passwordElement.value.trim();
+
+            if (!userRole || !name || !email || !password) {
+                registerError.textContent = 'Please fill in all fields.';
+                registerError.style.display = 'block';
+                return;
+            }
+
+            if (userRole !== 'student' && userRole !== 'educator') {
+                registerError.textContent = 'Please select a valid role (Student or Educator).';
+                registerError.style.display = 'block';
+                return;
+            }
+
+            let users = {};
+            try {
+                const storedUsers = localStorage.getItem('users');
+                users = storedUsers ? JSON.parse(storedUsers) : {};
+            } catch (e) {
+                console.error('Error parsing users from localStorage:', e);
+                registerError.textContent = 'Error saving user data. Please try again.';
+                registerError.style.display = 'block';
+                return;
+            }
+
+            if (users[email]) {
+                registerError.textContent = 'Email already exists.';
+                registerError.style.display = 'block';
+                return;
+            }
+
+            users[email] = { name, password, role: userRole };
+            try {
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('loggedIn', 'true');
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userRole', userRole);
+            } catch (e) {
+                console.error('Error saving to localStorage:', e);
+                registerError.textContent = 'Error saving user data. Please try again.';
+                registerError.style.display = 'block';
+                return;
+            }
+
+            alert('Registration successful!');
+            if (userRole === 'student') {
+                window.location.href = 'dashboard.html';
+            } else if (userRole === 'educator') {
+                window.location.href = 'teacherpanel.html';
+            }
         }
 
-        function openEducatorForm(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const educatorData = Object.fromEntries(formData.entries());
-            alert(`Educator Registered: ${JSON.stringify(educatorData)}`);
-        }
+        window.onload = function() {
+            const currentDateElement = document.getElementById('current-date');
+            if (currentDateElement) {
+                currentDateElement.textContent = new Date().toLocaleDateString();
+            }
+
+            document.querySelectorAll('.form button').forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    gsap.to(btn, { scale: 1.1, boxShadow: '0 0 25px #00ffcc', duration: 0.3 });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { scale: 1, boxShadow: '0 0 15px #ff00ff', duration: 0.3 });
+                });
+            });
+
+            document.querySelectorAll('.social-icon').forEach(icon => {
+                icon.addEventListener('mouseenter', () => {
+                    gsap.to(icon, {
+                        scale: 1.3,
+                        rotation: 15,
+                        filter: 'drop-shadow(0 0 15px rgba(0, 255, 204, 1))',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+                icon.addEventListener('mouseleave', () => {
+                    gsap.to(icon, {
+                        scale: 1,
+                        rotation: 0,
+                        filter: 'drop-shadow(0 0 5px rgba(0, 255, 204, 0.5))',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+            });
+        };
     </script>
 </body>
-
 </html>
