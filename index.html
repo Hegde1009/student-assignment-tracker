@@ -1,27 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduTrack - Student Assignment Tracker</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            background: #1a1a1a;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
+        /* Header and Branding */
+        header#branding-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 1s ease;
+        }
+
+        .branding h1 {
+            font-size: 3em;
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
+            margin: 0;
+            animation: pulse 2s infinite;
+        }
+
+        .branding p {
+            font-size: 1.2em;
+            color: #e0e0e0;
+        }
+
+        .welcome-section, .ad-section {
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            max-width: 600px;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .ad-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ad-section li {
+            font-size: 1.1em;
+            margin: 10px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .ad-section li:hover {
+            transform: translateX(10px);
+        }
+
+        /* Role Selection */
+        #role-selection {
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 1s ease 1s both;
+        }
+
+        .login-container button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff00ff, #00ffcc);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px #ff00ff;
+            animation: bounceIn 1s ease;
+        }
+
+        .login-container button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #00ffcc;
+        }
+
+        /* Gaming-Style Authentication Section */
+        #authentication {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+
+        #authentication video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .auth-container {
+            max-width: 400px;
+            width: 90%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #00ffcc;
+            box-shadow: 0 0 30px #00ffcc, 0 0 50px #00ffcc;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            animation: zoomIn 0.8s ease;
+        }
+
+        .auth-container h2 {
+            font-size: 2.5em;
+            color: #00ffcc;
+            text-shadow: 0 0 15px #00ffcc;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .form input {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #00ffcc;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .form input::placeholder {
+            color: #bbb;
+        }
+
+        .form input:focus {
+            outline: none;
+            border-color: #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .form button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(45deg, #ff00ff, #00ffcc);
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .form button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00ffcc;
+        }
+
+        .form p {
+            margin-top: 15px;
+        }
+
+        .form a {
+            color: #00ffcc;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form a:hover {
+            color: #ff00ff;
+        }
+
+        .error-message {
+            color: #ff5555;
+            font-size: 1em;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Main Content */
+        #main-content {
+            padding: 20px;
+            background: #1a1a1a;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: slideInLeft 1s ease;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00ffcc;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #ff00ff;
+        }
+
+        .nav-links .bell-icon {
+            font-size: 1.3em;
+            color: #fff;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-links .bell-icon:hover {
+            color: #ff00ff;
+            transform: scale(1.2);
+        }
+
+        #current-date {
+            font-size: 1em;
+            color: #e0e0e0;
+        }
+
+        /* Dashboard Sections */
+        #dashboard, #announcements, #features, #notifications {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .announcement-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .announcement-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        footer a {
+            color: #ff00ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #00ffcc;
+        }
+
+        footer div {
+            max-width: 1000px;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        footer div div {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li {
+            margin: 10px 0;
+        }
+
+        /* Social Media Icons */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            font-size: 1.8em;
+            color: #00ffcc;
+            transition: none; /* GSAP handles transitions */
+        }
+
+        .social-links a i {
+            filter: drop-shadow(0 0 5px rgba(0, 255, 204, 0.5));
+        }
+    </style>
+</head>
 <body>
     <!-- Branding and Welcome Section -->
-    <header id="branding-section">
+    <header id="branding-section" class="animate__animated animate__fadeInDown">
         <div class="branding">
             <h1>EduTrack</h1>
             <p>Your one-stop solution for tracking assignments and progress.</p>
         </div>
 
-        <section class="welcome-section">
+        <section class="welcome-section animate__animated animate__fadeInUp">
             <h2>Welcome to Student Assignment Tracker</h2>
             <p>Manage assignments, track deadlines, and receive feedback seamlessly!</p>
         </section>
 
-        <section class="ad-section">
+        <section class="ad-section animate__animated animate__fadeInUp">
             <h3>Why Choose EduTrack?</h3>
             <ul>
                 <li>📅 Centralized Assignment Management</li>
@@ -32,33 +360,41 @@
     </header>
 
     <!-- Role Selection Section -->
-    <section id="role-selection">
+    <section id="role-selection" class="animate__animated animate__fadeIn">
         <div class="login-container">
             <h1>Select Your Role</h1>
-            <button onclick="showSignIn('student')">I am a Student</button>
-            <button onclick="showSignIn('educator')">I am an Educator</button>
+            <button onclick="setRole('student')" class="animate__animated animate__bounceIn">I am a Student</button>
+            <button onclick="setRole('educator')" class="animate__animated animate__bounceIn">I am an Educator</button>
         </div>
     </section>
 
-    <!-- Authentication Section -->
+    <!-- Gaming-Style Authentication Section -->
     <section id="authentication" style="display: none;">
+        <video autoplay muted loop playsinline>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-blue-lights-in-motion-529-preview.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         <div class="auth-container">
-            <div class="toggle-container">
-                <button id="signInBtn" onclick="toggleForm('signIn')">Sign In</button>
-                <button id="signUpBtn" onclick="toggleForm('signUp')">Sign Up</button>
+            <div id="loginForm" class="form">
+                <h2>Login to EduTrack</h2>
+                <form id="loginFormElement" onsubmit="handleLogin(event)">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                    <p class="error-message" id="loginError">Invalid email or password.</p>
+                    <p>Don't have an account? <a onclick="toggleForms('signup')">Sign up</a></p>
+                </form>
             </div>
-            <div id="signInForm" class="form">
-                <h2>Sign In</h2>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <button onclick="handleLogin()">Sign In</button>
-            </div>
-            <div id="signUpForm" class="form" style="display: none;">
-                <h2>Sign Up</h2>
-                <input type="text" placeholder="Full Name" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <button onclick="handleSignUp()">Sign Up</button>
+            <div id="signupForm" class="form" style="display: none;">
+                <h2>Sign Up for EduTrack</h2>
+                <form id="signupFormElement" onsubmit="handleSignUp(event)">
+                    <input type="text" id="signupName" placeholder="Full Name" required>
+                    <input type="email" id="signupEmail" placeholder="Email" required>
+                    <input type="password" id="signupPassword" placeholder="Password" required>
+                    <button type="submit">Sign Up</button>
+                    <p class="error-message" id="signupError">Email already exists.</p>
+                    <p>Already have an account? <a onclick="toggleForms('login')">Log in</a></p>
+                </form>
             </div>
         </div>
     </section>
@@ -66,31 +402,32 @@
     <!-- Main Dashboard Content -->
     <div id="main-content" style="display: none;">
         <!-- Navigation Bar -->
-        <nav>
+        <nav class="animate__animated animate__slideInLeft">
             <div class="logo">EduTrack</div>
             <ul class="nav-links">
                 <li><a href="./dashboard.html">Dashboard</a></li>
                 <li><a href="#announcements">Announcements</a></li>
                 <li><a href="#features">Features</a></li>
-                <li><a href="#notifications">Notifications</a></li>
+                <li><a href="#notifications" class="bell-icon"><i class="fas fa-bell"></i></a></li>
                 <li><a href="./progress.html">Progress</a></li>
                 <li><a href="./attendancecalculator.html">VTU Attendance Calculator</a></li>
                 <li><a href="./studentpanel.html">Assignments</a></li>
                 <li><a href="./register.html">Register</a></li>
+                <li><a href="./profile.html">Profile</a></li>
                 <li><a href="#" onclick="logout()">Logout</a></li>
             </ul>
             <div id="current-date"></div>
         </nav>
 
         <!-- Dashboard Sections -->
-        <section id="dashboard">
+        <section id="dashboard" class="animate__animated animate__fadeInUp">
             <header>
                 <h2>Dashboard</h2>
                 <hr>
             </header>
             <div id="announcements">
                 <h3>Announcements</h3>
-                <div class="announcement-card">No new announcements.</div>
+                <div class="announcement-card animate__animated animate__fadeIn">No new announcements.</div>
             </div>
             <div id="features">
                 <h3>Features</h3>
@@ -104,87 +441,225 @@
     </div>
 
     <!-- Footer -->
-    <footer style="background-color: #333; color: #fff; padding: 20px; text-align: center;">
-        <div style="max-width: 1000px; margin: auto;">
-            <!-- Footer Links -->
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
-                <!-- About Section -->
-                <div>
-                    <h3>About Us</h3>
-                    <p style="max-width: 300px;">The Student Assignment Tracker is designed to help students manage
-                        assignments, track deadlines, and receive feedback—all in one place. Our goal is to make
-                        learning more organized and stress-free.</p>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h3>Quick Links</h3>
-                    <ul style="list-style-type: none; padding: 0;">
-                        <li><a href="./dashboard.html" style="color: #fff; text-decoration: none;">Dashboard</a></li>
-                        <li><a href="./profile.html" style="color: #fff; text-decoration: none;">Profile</a></li>
-                        <li><a href="./register.html" style="color: #fff; text-decoration: none;">Register</a></li>
-                        <li><a href="./attendancecalculator.html" style="color: #fff; text-decoration: none;">Attendance</a></li>
-                        <li><a href="#contact" style="color: #fff; text-decoration: none;">Contact Us</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Section -->
-                <div>
-                    <h3>Contact Us</h3>
-                    <p>Email: <a href="mailto:support@studenttracker.com"
-                            style="color: #fff; text-decoration: none;">support@studenttracker.com</a></p>
-                    <p>Phone: (123) 456-7890</p>
-                </div>
-
-                <!-- Social Media Links -->
-                <div>
-                    <h3>Follow Us</h3>
-                    <a href="https://www.instagram.com/accounts/login/" target="_blank"
-                        style="color: #ffffff; margin: 10 10px;text-decoration: none;"><u>Instagram </u></a>
-                    <a href="" style="color: #fff; margin: 10 10px; text-decoration: none;">Twitter</a>
-                    <a href="https://www.facebook.com/login/" target="_blank"
-                        style="color: #fff; margin: 10 10px; text-decoration: none;">Facebook</a>
-                    <a href="#" style="color: #fff; margin: 10 10px; text-decoration: none;">LinkedIn</a>
-                </div>
+    <footer class="animate__animated animate__fadeIn">
+        <div>
+            <!-- About Section -->
+            <div>
+                <h3>About Us</h3>
+                <p>The Student Assignment Tracker is designed to help students manage assignments, track deadlines, and receive feedback—all in one place. Our goal is to make learning more organized and stress-free.</p>
             </div>
 
-            <!-- Copyright -->
-            <div style="margin-top: 20px;">
-                <p>&copy; 2024 Student Assignment Tracker. All rights reserved.</p>
+            <!-- Quick Links (Hidden on Start Page) -->
+            <div id="quick-links" style="display: none;">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="./dashboard.html">Dashboard</a></li>
+                    <li><a href="./profile.html">Profile</a></li>
+                    <li><a href="./attendancecalculator.html">Attendance</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div>
+                <h3>Contact Us</h3>
+                <p>Email: <a href="/cdn-cgi/l/email-protection#3c4f494c4c534e487c595849484e5d5f57125f5351"><span class="__cf_email__" data-cfemail="bc8f898c8c938e88bc999889888e9d9f97d29f9391">[email&#160;protected]</span></a></p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+
+            <!-- Social Media Links -->
+            <div>
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
             </div>
         </div>
-
-        <p>&copy; 2024 EduTrack. All rights reserved.</p>
+        <div>
+            <p>© 2025 EduTrack. All rights reserved.</p>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
-        function showSignIn(role) {
+        let userRole = '';
+
+        function setRole(role) {
+            userRole = role;
+            localStorage.setItem('userRole', role); // Store role immediately
             document.getElementById('branding-section').style.display = 'none';
             document.getElementById('role-selection').style.display = 'none';
-            document.getElementById('authentication').style.display = 'block';
+            document.getElementById('authentication').style.display = 'flex';
+            document.getElementById('quick-links').style.display = 'none';
+            toggleForms('login');
+            gsap.fromTo('.auth-container', 
+                { scale: 0.8, opacity: 0, y: 50 },
+                { scale: 1, opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
+            );
         }
 
-        function toggleForm(formType) {
-            if (formType === 'signIn') {
-                document.getElementById('signInForm').style.display = 'block';
-                document.getElementById('signUpForm').style.display = 'none';
+        function toggleForms(formType) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const loginError = document.getElementById('loginError');
+            const signupError = document.getElementById('signupError');
+            loginError.style.display = 'none';
+            signupError.style.display = 'none';
+
+            if (formType === 'login') {
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+                gsap.from(loginForm, { x: -50, opacity: 0, duration: 0.5, ease: 'power2.out' });
             } else {
-                document.getElementById('signInForm').style.display = 'none';
-                document.getElementById('signUpForm').style.display = 'block';
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+                gsap.from(signupForm, { x: 50, opacity: 0, duration: 0.5, ease: 'power2.out' });
             }
         }
 
-        function handleLogin() {
+        function handleSignUp(event) {
+            event.preventDefault();
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value.trim();
+            const signupError = document.getElementById('signupError');
+
+            if (!name || !email || !password) {
+                signupError.textContent = 'Please fill in all fields.';
+                signupError.style.display = 'block';
+                return;
+            }
+
+            let users = {};
+            try {
+                users = JSON.parse(localStorage.getItem('users')) || {};
+            } catch (e) {
+                console.error('Error parsing users from localStorage:', e);
+                users = {};
+            }
+
+            if (users[email]) {
+                signupError.textContent = 'Email already exists.';
+                signupError.style.display = 'block';
+                return;
+            }
+
+            users[email] = { name, password, role: userRole };
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Sign Up successful! Please log in.');
+            toggleForms('login');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const loginError = document.getElementById('loginError');
+
+            if (!email || !password) {
+                loginError.textContent = 'Please fill in all fields.';
+                loginError.style.display = 'block';
+                return;
+            }
+
+            let users = {};
+            try {
+                users = JSON.parse(localStorage.getItem('users')) || {};
+            } catch (e) {
+                console.error('Error parsing users from localStorage:', e);
+                loginError.textContent = 'Error accessing user data. Please try again.';
+                loginError.style.display = 'block';
+                return;
+            }
+
+            if (!users[email]) {
+                loginError.textContent = 'User not found. Please sign up.';
+                loginError.style.display = 'block';
+                toggleForms('signup');
+                return;
+            }
+
+            if (users[email].password !== password) {
+                loginError.textContent = 'Invalid password.';
+                loginError.style.display = 'block';
+                return;
+            }
+
+            if (users[email].role !== userRole) {
+                loginError.textContent = `This email is registered as a ${users[email].role}, not a ${userRole}.`;
+                loginError.style.display = 'block';
+                return;
+            }
+
+            localStorage.setItem('loggedIn', 'true');
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userRole', userRole);
+
             document.getElementById('authentication').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
+            document.getElementById('quick-links').style.display = 'block';
+            gsap.from('#main-content', { opacity: 0, y: 100, duration: 1, ease: 'power3.out' });
         }
 
         function logout() {
             alert('You have been logged out.');
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userRole');
             location.reload();
         }
-    </script>
-</body>
 
+        window.onload = function() {
+            if (localStorage.getItem('loggedIn') === 'true') {
+                userRole = localStorage.getItem('userRole') || '';
+                document.getElementById('branding-section').style.display = 'none';
+                document.getElementById('role-selection').style.display = 'none';
+                document.getElementById('authentication').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('quick-links').style.display = 'block';
+                const email = localStorage.getItem('userEmail');
+                if (email) {
+                    document.getElementById('loginEmail').value = email;
+                }
+            }
+            document.getElementById('current-date').textContent = new Date().toLocaleDateString();
+
+            // GSAP hover animations for buttons
+            document.querySelectorAll('.form button').forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    gsap.to(btn, { scale: 1.1, boxShadow: '0 0 25px #00ffcc', duration: 0.3 });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { scale: 1, boxShadow: '0 0 15px #ff00ff', duration: 0.3 });
+                });
+            });
+
+            // GSAP hover animations for social media icons
+            document.querySelectorAll('.social-icon').forEach(icon => {
+                icon.addEventListener('mouseenter', () => {
+                    gsap.to(icon, {
+                        scale: 1.3,
+                        rotation: 15,
+                        filter: 'drop-shadow(0 0 15px rgba(0, 255, 204, 1))',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+                icon.addEventListener('mouseleave', () => {
+                    gsap.to(icon, {
+                        scale: 1,
+                        rotation: 0,
+                        filter: 'drop-shadow(0 0 5px rgba(0, 255, 204, 0.5))',
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+            });
+        };
+    </script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93d166594ec7b038',t:'MTc0Njc5NTgzNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
 </html>
